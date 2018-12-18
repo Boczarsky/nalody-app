@@ -1,0 +1,79 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "name": "Zimny Drań",
+      "address":{
+        "street":"Raciborska 9",
+        "city": "Gliwice",
+        "latitude": "50.294420",
+        "longitude": "18.663970"
+      },
+      "logoURL": "https://img.taste.com.au/a9tkfBF7/taste/2017/02/fruity-tingle-ice-cream-cones-121035-1.jpg",
+      "additionalInfo": "none",
+      "flavours":["Truskawka", "Pistacja", "Malina", "Jagoda"]
+    },
+    {
+      "id": "2",
+      "name": "Polskie Lody Rzemieślnicze",
+      "address":{
+        "street":"Bankowa 7",
+        "city": "Gliwice",
+        "latitude": "50.293090",
+        "longitude": "18.665100"
+      },
+      "logoURL": "https://www.sugarhero.com/wp-content/uploads/2016/05/doughnut-ice-cream-sundae-5.jpg",
+      "additionalInfo": "none","flavours":["Truskawka", "Pistacja", "Malina", "Jagoda"]
+    },
+    {
+      "id": "3",
+      "name": "Istne Lody Rzemieślnicze",
+      "address":{
+        "street":"Mariacka Tylna 7",
+        "city": "Katowice",
+        "latitude": "50.257090",
+        "longitude": "19.025570"
+      },
+      "logoURL": "http://www.pamperedchef.com/iceberg/com/recipe/1287045-lg.jpg",
+      "additionalInfo": "none",
+      "flavours":["Truskawka", "Pistacja", "Malina", "Jagoda"]},
+    {
+      "id": "4",
+      "name": "Gelato Studio",
+      "address":{
+        "street":"Stanisława Dubois 2",
+        "city": "Gliwice",
+        "latitude": "50.298430",
+        "longitude": "18.675190"
+      },
+      "logoURL": "https://img.taste.com.au/6CgraiFM/w720-h480-cfill-q80/taste/2017/12/roasted-peach-sour-cream-ice-cream-taste_1980x1320-133837-1.jpg",
+      "additionalInfo": "none",
+      "flavours":["Truskawka", "Pistacja", "Malina", "Jagoda"]
+    },
+    {
+      "id": "5",
+      "name": "Lucky Lood",
+      "address":{
+        "street":"Dolnych Wałów 1",
+        "city": "Gliwice",
+        "latitude": "50.293650",
+        "longitude": "18.668300"},
+      "logoURL": "https://www.seriouseats.com/2018/06/20180625-no-churn-vanilla-ice-cream-vicky-wasik-13-1500x1125.jpg",
+      "additionalInfo": "none",
+      "flavours":["Truskawka", "Pistacja", "Malina", "Jagoda"]
+    },
+    {
+      "id": "6",
+      "name": "Gelateria Vaneta",
+      "address":{
+        "street":"Jana Siemińskiego 18-20",
+        "city": "Gliwice",
+        "latitude": "50.296460",
+        "longitude": "18.659930"
+      },
+      "logoURL": "https://img.taste.com.au/jiN6NCCD/taste/2016/11/no-churn-ice-cream-4-ways-100932-1.jpeg",
+      "additionalInfo": "none",
+      "flavours":["Truskawka", "Pistacja", "Malina", "Jagoda"]
+    }
+  ]
+}
