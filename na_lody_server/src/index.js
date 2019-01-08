@@ -1,15 +1,14 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+
+const iceCreamShops = require('./icecreamshops');
 
 const app = express();
 
 const port = 3000
 
-app.listen(port)
+app.use(bodyParser.json());
 
-app.get('/', (req, res) => res.send('NaLody API'));
+app.use('/icecreamshops', iceCreamShops);
 
-const smaki = ['CZEKOLADA','ŚMIETANKA','TRUSKAWKA'];
-
-app.get('/smaki', (req, res) => res.send(
-    smaki
-));
+app.listen(port);
