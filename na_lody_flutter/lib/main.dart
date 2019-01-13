@@ -24,11 +24,11 @@ class MyApp extends StatelessWidget {
 initStorage() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   List<String> favorites = prefs.getStringList('favorites');
-  int radious = prefs.getInt('radious');
+  int radius = prefs.getInt('radius');
   if(favorites == null){
     prefs.setStringList('favorites', []);
   }
-  if(radious == null){
-    prefs.setInt('radious', 10);
+  if(radius == null){
+    prefs.setInt('radius', 10);
   }
 }

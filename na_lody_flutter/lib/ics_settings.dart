@@ -16,9 +16,9 @@ class _SettingsState extends State {
   void initState() {
     super.initState();
     SharedPreferences.getInstance().then((prefs){
-      int radious = prefs.getInt('radious');
+      int radius = prefs.getInt('radius');
         setState(() {
-          _controller.text = radious.toString();
+          _controller.text = radius.toString();
         });
     });
   }
@@ -45,7 +45,7 @@ class _SettingsState extends State {
                   onSubmitted: (input){
                     setState(() {
                       SharedPreferences.getInstance().then((prefs) {
-                        prefs.setInt('radious', int.parse(input));
+                        prefs.setInt('radius', int.parse(input));
                       });
                     });
                   },

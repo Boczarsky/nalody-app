@@ -19,7 +19,7 @@ class IcecreamShop {
 
   factory IcecreamShop.fromJSON(Map<String, dynamic> parsedJSON) {
     return IcecreamShop(
-      id: int.parse(parsedJSON["id"]),
+      id: parsedJSON["id"],
       name: parsedJSON["name"],
       address: Address.fromJSON(parsedJSON["address"]),
       logoUrl: parsedJSON["logoUrl"],
@@ -46,8 +46,8 @@ class Address {
     return Address(
       street: parsedJSON["street"],
       city: parsedJSON["city"],
-      latitude: double.parse(parsedJSON["latitude"]),
-      longitude: double.parse(parsedJSON["longitude"])
+      latitude: parsedJSON["latitude"],
+      longitude: parsedJSON["longitude"]
     );
   }
 
