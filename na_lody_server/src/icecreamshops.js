@@ -8,6 +8,8 @@ router.route('/:id').get(getIcecreamShopById).delete(deleteIcecreamShop);
 
 router.route('/favorites').post(getFavorites);
 
+router.route('/shops/all').get(getAll);
+
 async function getIcecreamShops(req, res) {
     const params = req.query;
     if(params.lat && params.long && params.rad) {
@@ -21,6 +23,11 @@ async function getIcecreamShops(req, res) {
     else {
         res.sendStatus(403);
     }
+}
+
+async function getAll(req, res) {
+        const data = await parseData( await database.getAll());
+        res.send(data);
 }
 
 async function getIcecreamShopById(req, res) {
@@ -40,13 +47,13 @@ async function getFavorites(req, res) {
     res.send(data);
 }
 
-function deleteIcecreamShop(req, res) {
+async function deleteIcecreamShop(req, res) {
     const id = req.params.id;
-    res.sendStatus(500)
+    res.sendStatus(await database.deleteIcecreamShop(id));
 }
 
-function addIcecreamShop(req, res) {
-    res.sendStatus(500)
+async function addIcecreamShop(req, res) {
+    res.sendStatus(await database.addIcecreamShop(req.body));
 }
 
 async function parseData(data) {
