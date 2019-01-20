@@ -1,0 +1,21 @@
+<mat-form-field>
+  <input #search matInput placeholder="Wpisz #Miasto lub Nazwę lokalu" type="search" (keyup.enter)="submit(search.value)">
+</mat-form-field>
+<button mat-stroked-button class="add-new-button" routerLink="/new">Dodaj nowy</button>
+<div class="center" *ngIf="loading">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
+<mat-list>
+  <ng-container *ngFor="let icecreamShop of searchResult | async">
+      <mat-list-item>
+          <a routerLink="/modify/{{icecreamShop.id}}" class="list-item-details">
+              <span class = "name">
+                  {{icecreamShop.name}}
+              </span>
+              <span class = "address">
+                  {{icecreamShop.address.toString()}}
+              </span>
+          </a>
+      </mat-list-item>
+  </ng-container>
+</mat-list>

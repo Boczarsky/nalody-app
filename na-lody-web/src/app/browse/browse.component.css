@@ -1,0 +1,29 @@
+.list-item-details {
+    min-height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+}
+mat-list-item {
+    min-height: 60px;
+}
+mat-list-item :hover {
+    background: rgb(240,240,240);
+    transition: background 300ms linear;
+}
+.address {
+    flex: 1;
+}
+.name {
+    padding-left: 10px;
+    flex: 1;
+}
+.center {
+    display: flex;
+    justify-content: center;
+}
+mat-progress-spinner {
+    margin: 20px;
+}

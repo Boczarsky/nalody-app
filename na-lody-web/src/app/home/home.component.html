@@ -1,0 +1,8 @@
+<mat-toolbar color="primary">
+  <span>Na lody</span>
+  <nav>
+    <button mat-button routerLink="/browse" [disabled]="!isActive(path.browse)">Przeglądaj</button>
+    <button mat-button routerLink="/manage" [disabled]="!isActive(path.manage)">Zarządzaj</button>
+  </nav>
+</mat-toolbar>
+<router-outlet></router-outlet>

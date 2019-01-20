@@ -1,0 +1,25 @@
+<mat-toolbar color="primary">
+  <mat-icon (click)="back()">arrow_back</mat-icon>
+  <span>{{name}}</span>
+</mat-toolbar>
+<div class="center" *ngIf="loading">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
+<main *ngIf="!loading">
+    <figure class="logo">
+      <img src="{{logoUrl}}">
+    </figure>
+    <section class="info">
+      <mat-card>{{additionalInfo}}</mat-card>
+      <section class="address">
+        <h3>Adres:</h3>
+        <p *ngIf="address">{{address.toString()}}</p>
+      </section>
+      <section class="flavours">
+        <h3>Dostępne smaki:</h3>
+        <mat-list *ngIf="flavours">
+          <mat-list-item *ngFor="let flavour of flavours">{{flavour}}</mat-list-item>
+        </mat-list>
+      </section>
+    </section>
+</main>

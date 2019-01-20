@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "run": "node src/index.js",
+    "server": "node src/index.js",
     "serve": "nodemon src/index.js"
   },
   "author": "Tomasz Boczarski",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "oracledb": "^3.0.1"
   }

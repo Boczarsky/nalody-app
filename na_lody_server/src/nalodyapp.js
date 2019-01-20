@@ -4,7 +4,7 @@ const database = require('./database');
 
 router.route('/icecreamshops').get(getIcecreamShops).post(addIcecreamShop);
 
-router.route('/icecreamshops/:id').get(getIcecreamShopById).delete(deleteIcecreamShop).put(updateIcecreamshop);
+router.route('/icecreamshops/:id').get(getIcecreamShopById).delete(deleteIcecreamShop).put(updateIcecreamshop).post(deleteIcecreamShop);
 
 router.route('/icecreamshops/:id/flavours').get(getFlavours).post(addFlavour).delete(deleteFlavour);
 
@@ -13,15 +13,19 @@ router.route('/favorites').post(getFavorites);
 async function getIcecreamShops(req, res) {
     const params = req.query;
     if(params.lat && params.long && params.rad) {
-        const data = await parseIcecreamData( await database.getIcecreamShopsWithinRange(params.lat, params.long, params.rad));
+        const data = await parseIcecreamShopsData( await database.getIcecreamShopsWithinRange(params.lat, params.long, params.rad));
         res.send(data);
     }
     else if(params.city){
-        const data = await parseIcecreamData( await database.getIcecreamShopsByCity(params.city) );
+        const data = await parseIcecreamShopsData( await database.getIcecreamShopsByCity(params.city) );
+        res.send(data);
+    }
+    else if(params.name) {
+        const data = await parseIcecreamShopsData( await database.getIcecreamShopByName(params.name) );
         res.send(data);
     } 
     else if(params.all){
-        const data = await parseIcecreamData( await database.getAllIcecreamShops());
+        const data = await parseIcecreamShopsData( await database.getAllIcecreamShops());
         res.send(data);
     }
     else {
@@ -36,7 +40,7 @@ async function addIcecreamShop(req, res) {
 async function getIcecreamShopById(req, res) {
     const id = parseInt(req.params.id);
     if(id) {
-        const data = await parseIcecreamData( await database.getIcecreamShopById(id) );
+        const data = await parseIcecreamShopData( await database.getIcecreamShopById(id) );
         res.send(data);
     }
     else {
@@ -89,7 +93,7 @@ async function deleteFlavour(req, res) {
 
 async function getFavorites(req, res) {
     const favorites = req.body;
-    const data = await parseIcecreamData( await database.getFavoriteIcecreamShops(favorites) );
+    const data = await parseIcecreamShopsData( await database.getFavoriteIcecreamShops(favorites) );
     res.send(data);
 }
 
@@ -104,14 +108,20 @@ function checkAddressDataValidity(data) {
     return city && street && latitude && longitude;
 }
 
-async function parseIcecreamData(data) {
+async function parseIcecreamShopsData(data) {
     const arr = [];
-    for(columns of data.rows) {
-        const flavours = await database.getFlavours(columns[0]);
-        const parsedData = {id: columns[0], name: columns[1], logoUrl: columns[2] ? columns[2] : '', additionalInfo: columns[3] ? columns[3] : '', address: {city: columns[4], street: columns[5], latitude: columns[6], longitude: columns[7]}, flavours: flavours.rows.map((column) => column[0])};
+    for(column of data.rows) {
+        const flavours = await database.getFlavours(column[0]);
+        const parsedData = {id: column[0], name: column[1], logoUrl: column[2] ? column[2] : '', additionalInfo: column[3] ? column[3] : '', address: {city: column[4], street: column[5], latitude: column[6], longitude: column[7]}, flavours: flavours.rows.map((column) => column[0])};
         arr.push(parsedData);
     }
     return arr;
+}
+
+async function parseIcecreamShopData(data) {
+    column = data.rows[0];
+    const flavours = await database.getFlavours(column[0]);
+    return {id: column[0], name: column[1], logoUrl: column[2] ? column[2] : '', additionalInfo: column[3] ? column[3] : '', address: {city: column[4], street: column[5], latitude: column[6], longitude: column[7]}, flavours: flavours.rows.map((column) => column[0])};
 }
 
 function parseFlavoursData(data) {

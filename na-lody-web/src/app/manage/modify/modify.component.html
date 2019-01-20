@@ -1,0 +1,47 @@
+<mat-toolbar color="primary">
+  <mat-icon (click)="back()">arrow_back</mat-icon>
+  <span>{{ name }}</span>
+</mat-toolbar>
+<div class="center" *ngIf="loading">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
+<main *ngIf="!loading">
+  <form [formGroup]="modifyIcecreamShopForm">
+    <mat-form-field>
+      <input matInput formControlName="nameControl" placeholder="Nazwa">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="logoUrlControl" placeholder="Adres url loga">
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput formControlName="additionalInfoControl" placeholder="Dodatkowe informacje"></textarea>
+    </mat-form-field>
+    <button mat-raised-button color="primary" [disabled]="!modifyIcecreamShopForm.valid" (click)="modifyIcecreamShop()">Zatwierdź</button>
+  </form>
+  <form [formGroup]="modifyAddressForm">
+    <mat-form-field>
+     <input matInput formControlName="cityControl" placeholder="Miasto"> 
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="streetControl" placeholder="Ulica">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="latitudeControl" placeholder="Szerokość geograficzna" type="number">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="longitudeControl" placeholder="Długość geograficzna" type="number">
+    </mat-form-field>
+    <button mat-raised-button color="primary" [disabled]="!modifyAddressForm.valid" (click)="modifyAddress()">Zatwierdź</button>
+  </form>
+  <mat-form-field class="flavour">
+    <input #flavourInput matInput placeholder="Smak">
+  </mat-form-field>
+  <button mat-raised-button class="add-flavour" (click)="pushFlavour(flavourInput)">Dodaj</button>
+  <mat-list>
+    <mat-list-item *ngFor="let flavour of flavours">
+      <span>{{flavour}}</span>
+      <button mat-button (click)="deleteFlavour(flavour)">Usuń</button>
+    </mat-list-item>
+  </mat-list>
+  <button mat-raised-button color="warn" (click)="deleteIcecreamShop()">Usuń lodziarnie</button>
+</main>

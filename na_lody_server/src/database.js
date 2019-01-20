@@ -54,6 +54,22 @@ async function getIcecreamShopById(id) {
   }
 }
 
+async function getIcecreamShopByName(name) {
+  let conn;
+  const sqlStatement = `select ics_id, name, logo_url, additional_info, city, street, latitude, longitude from icecreamshops join addresses using(ics_id) where lower(name) like '%${name.toLowerCase()}%'`;
+  try {
+    conn = await oracledb.getConnection();
+    const icecreamShops = await conn.execute(sqlStatement);
+    return icecreamShops;
+  } catch (err) {
+    console.log(err);
+  } finally {
+    if (conn) {
+      await conn.close();
+    }
+  }
+}
+
 async function getIcecreamShopsWithinRange(latitude, longitude, range) {
   let conn;
   const sqlStatement = `select ics_id, name, logo_url, additional_info, city, street, latitude, longitude from icecreamshops join addresses using(ics_id) where count_distance(latitude, longitude, '${latitude}', '${longitude}') < ${range}`;
@@ -72,7 +88,7 @@ async function getIcecreamShopsWithinRange(latitude, longitude, range) {
 
 async function getIcecreamShopsByCity(city) {
   let conn;
-  const sqlStatement = `select ics_id, name, logo_url, additional_info, city, street, latitude, longitude from icecreamshops join addresses using(ics_id) where city like '${city}'`;
+  const sqlStatement = `select ics_id, name, logo_url, additional_info, city, street, latitude, longitude from icecreamshops join addresses using(ics_id) where lower(city) like '%${city.toLowerCase()}%'`;
   try {
     conn = await oracledb.getConnection();
     const icecreamShops = await conn.execute(sqlStatement);
@@ -267,7 +283,7 @@ async function deleteIcecreamShop(id) {
 
 async function deleteFlavour(id, flavour) {
   let conn;
-  const sqlStatement = `delete flavours where ics_id = ${id} lower(flavour) like '${flavour.toLowerCase()}'`;
+  const sqlStatement = `delete flavours where ics_id = ${id} and lower(flavour) like '${flavour.toLowerCase()}'`;
   try {
     conn = await oracledb.getConnection();
     await conn.execute(sqlStatement);
@@ -334,6 +350,7 @@ module.exports = {
   getFlavours,
   getIcecreamShopById,
   getIcecreamShopsByCity,
+  getIcecreamShopByName,
   getIcecreamShopsWithinRange,
   init,
   updateAddress,

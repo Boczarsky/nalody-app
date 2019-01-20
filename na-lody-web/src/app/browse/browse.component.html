@@ -1,0 +1,17 @@
+<div class="center" *ngIf="loading">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
+<mat-list>
+    <ng-container *ngFor="let icecreamShop of icecreamShops | async">
+        <mat-list-item>
+            <a routerLink="/details/{{icecreamShop.id}}" class="list-item-details">
+                <span class = "name">
+                    {{icecreamShop.name}}
+                </span>
+                <span class = "address">
+                    {{icecreamShop.address.toString()}}
+                </span>
+            </a>
+        </mat-list-item>
+    </ng-container>
+</mat-list>
