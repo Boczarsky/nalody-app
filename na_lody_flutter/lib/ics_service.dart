@@ -23,7 +23,7 @@ class IcecreamShopsService {
     if(permision) {
       final currentLocation = await location.getLocation();
       final radius = prefs.getInt('radius');
-      final url = 'http://192.168.137.1:3000/icecreamshops?lat=' + currentLocation['latitude'].toString() + '&long=' + currentLocation['longitude'].toString() + '&rad=' + radius.toString();
+      final url = 'http://192.168.137.1:3000/icecreamshops?mode=range&lat=' + currentLocation['latitude'].toString() + '&lng=' + currentLocation['longitude'].toString() + '&rad=' + radius.toString();
       final data = await http.get(url);
       final distance = new Distance();
       List<dynamic> response = JSON.jsonDecode(data.body);
@@ -37,7 +37,7 @@ class IcecreamShopsService {
   }
 
   Future<List<IcecreamShop>> citySearch(String city) async {
-    final url = 'http://192.168.137.1:3000/icecreamshops?city=' + city;
+    final url = 'http://192.168.137.1:3000/icecreamshops?mode=city&name=' + city;
     final data = await http.get(url);
     List<dynamic> response = JSON.jsonDecode(data.body);
     return response.map((item){
@@ -48,7 +48,7 @@ class IcecreamShopsService {
   Future<List<IcecreamShop>> getFavorites() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> favorites = prefs.getStringList('favorites');
-    final url = 'http://192.168.137.1:3000/icecreamshops/favorites';
+    final url = 'http://192.168.137.1:3000/icecreamshops/user/favorites';
     final data = await http.post(url, headers: {'Content-type': 'application/json'},
         body: JSON.jsonEncode(favorites));
     List<dynamic> response = JSON.jsonDecode(data.body);
