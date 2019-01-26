@@ -16,9 +16,6 @@
     <mat-form-field>
       <textarea matInput formControlName="additionalInfoControl" placeholder="Dodatkowe informacje"></textarea>
     </mat-form-field>
-    <button mat-raised-button color="primary" [disabled]="!modifyIcecreamShopForm.valid" (click)="modifyIcecreamShop()">Zatwierdź</button>
-  </form>
-  <form [formGroup]="modifyAddressForm">
     <mat-form-field>
      <input matInput formControlName="cityControl" placeholder="Miasto"> 
     </mat-form-field>
@@ -31,7 +28,7 @@
     <mat-form-field>
       <input matInput formControlName="longitudeControl" placeholder="Długość geograficzna" type="number">
     </mat-form-field>
-    <button mat-raised-button color="primary" [disabled]="!modifyAddressForm.valid" (click)="modifyAddress()">Zatwierdź</button>
+    <button mat-raised-button color="primary" [disabled]="!modifyIcecreamShopForm.valid" (click)="modifyIcecreamShop()">Zatwierdź</button>
   </form>
   <mat-form-field class="flavour">
     <input #flavourInput matInput placeholder="Smak">

@@ -23,10 +23,7 @@ export class ModifyComponent implements OnInit {
   modifyIcecreamShopForm = new FormGroup({
     nameControl: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(60)]),
     logoUrlControl: new FormControl('', [Validators.maxLength(255)]),
-    additionalInfoControl: new FormControl('', [Validators.maxLength(255)])
-  });
-
-  modifyAddressForm = new FormGroup({
+    additionalInfoControl: new FormControl('', [Validators.maxLength(255)]),
     cityControl: new FormControl('', [Validators.required]),
     streetControl: new FormControl('', [Validators.required]),
     latitudeControl: new FormControl('', [Validators.required]),
@@ -48,9 +45,7 @@ export class ModifyComponent implements OnInit {
         this.modifyIcecreamShopForm.setValue({
           nameControl: this.name,
           logoUrlControl: this.logoUrl,
-          additionalInfoControl: this.additionalInfo
-        });
-        this.modifyAddressForm.setValue({
+          additionalInfoControl: this.additionalInfo,
           cityControl: this.address.city,
           streetControl: this.address.street,
           latitudeControl: this.address.latitude,
@@ -66,33 +61,29 @@ export class ModifyComponent implements OnInit {
 
   modifyIcecreamShop() {
     const body = {
+      id: parseInt(this.id.toString(), 10),
       name: this.modifyIcecreamShopForm.get('nameControl').value,
       logoUrl: this.modifyIcecreamShopForm.get('logoUrlControl').value,
-      additionalInfo: this.modifyIcecreamShopForm.get('additionalInfoControl').value
+      additionalInfo: this.modifyIcecreamShopForm.get('additionalInfoControl').value,
+      address: {
+        city: this.modifyIcecreamShopForm.get('cityControl').value,
+        street: this.modifyIcecreamShopForm.get('streetControl').value,
+        latitude: parseFloat(this.modifyIcecreamShopForm.get('latitudeControl').value),
+        longitude: parseFloat(this.modifyIcecreamShopForm.get('longitudeControl').value)
+      },
+      flavours: this.flavours
     };
-    this.icsService.updateIcecreamShop(this.id, body).subscribe((data) => console.log(data), (err) => console.log(err));
-  }
-
-  modifyAddress() {
-    const body = {
-      city: this.modifyAddressForm.get('cityControl').value,
-      street: this.modifyAddressForm.get('streetControl').value,
-      latitude: this.modifyAddressForm.get('latitudeControl').value,
-      longitude: this.modifyAddressForm.get('longitudeControl').value
-    };
-    this.icsService.updateAddressShop(this.id, body).subscribe((data) => console.log(data), (err) => console.log(err));
+    this.icsService.updateIcecreamShop(this.id, body).subscribe((data) => data, (err) => console.log(err));
   }
 
   deleteIcecreamShop() {
-    this.icsService.deleteIcecreamShop(this.id).subscribe((data) => data, (err) => {
-      if (err.status === 201) {
-        this.back();
-      }
+    this.icsService.deleteIcecreamShop(this.id).subscribe((data) => {
+      this.back();
     });
   }
 
   pushFlavour(input) {
-    this.icsService.addFlavour(this.id, input.value).subscribe((data) => data, (err) => {
+    this.icsService.addFlavour(this.id, input.value).subscribe((data) => {
       this.flavours.push(input.value);
       input.value = '';
     });

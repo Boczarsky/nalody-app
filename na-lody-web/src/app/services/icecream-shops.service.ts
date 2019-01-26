@@ -9,54 +9,50 @@ import { map } from 'rxjs/operators';
 })
 export class IcecreamShopsService {
 
-  private baseUrl = 'http://localhost:3000/nalodyapp/';
+  private baseUrl = 'http://localhost:3000/icecreamshops';
 
   constructor(protected http: HttpClient) {}
 
   getAllIcecreamShops(): Observable<IcecreamShop[]> {
-    return this.http.get<IcecreamShop[]>(this.baseUrl + 'icecreamshops?all=true')
+    return this.http.get<IcecreamShop[]>(this.baseUrl + '?mode=all')
     .pipe(map((res) => res.map((data) => new IcecreamShop(data)
     )));
   }
 
   getIcecreamShop(id: Number) {
-    return this.http.get<IcecreamShop>(this.baseUrl + `icecreamshops/${id}`)
+    return this.http.get<IcecreamShop>(this.baseUrl + `/${id}`)
     .pipe(map((data => new IcecreamShop(data))));
   }
 
   getIcecreamShopsByName(name: String): Observable<IcecreamShop[]> {
-    return this.http.get<IcecreamShop[]>(this.baseUrl + `icecreamshops?name=${name}`)
+    return this.http.get<IcecreamShop[]>(this.baseUrl + `?mode=name&name=${name}`)
     .pipe(map((res) => res.map((data) => new IcecreamShop(data)
     )));
   }
 
   getIcecreamShopsByCity(city: String): Observable<IcecreamShop[]> {
-    return this.http.get<IcecreamShop[]>(this.baseUrl + `icecreamshops?city=${city}`)
+    return this.http.get<IcecreamShop[]>(this.baseUrl + `?mode=city&name=${city}`)
     .pipe(map((res) => res.map((data) => new IcecreamShop(data)
     )));
   }
 
   updateIcecreamShop(id: Number, body) {
-    return this.http.put(this.baseUrl + `icecreamshops/${id}?modify=icecreamshop`, body);
-  }
-
-  updateAddressShop(id: Number, body) {
-    return this.http.put(this.baseUrl + `icecreamshops/${id}?modify=address`, body);
+    return this.http.put(this.baseUrl + `/${id}`, body);
   }
 
   addIcecreamShop(body) {
-    return this.http.post(this.baseUrl + 'icecreamshops', body);
+    return this.http.post(this.baseUrl, body);
   }
 
   deleteIcecreamShop(id: Number) {
-    return this.http.delete(this.baseUrl + `icecreamshops/${id}`);
+    return this.http.delete(this.baseUrl + `/${id}`);
   }
 
   addFlavour(id, flavour) {
-    return this.http.post(this.baseUrl + `icecreamshops/${id}/flavours?flavour=${flavour}`, {});
+    return this.http.post(this.baseUrl + `/${id}/flavours?value=${flavour}`, {});
   }
 
   deleteFlavour(id, flavour) {
-    return this.http.delete(this.baseUrl + `icecreamshops/${id}/flavours?flavour=${flavour}`, {});
+    return this.http.delete(this.baseUrl + `/${id}/flavours?value=${flavour}`);
   }
 }
