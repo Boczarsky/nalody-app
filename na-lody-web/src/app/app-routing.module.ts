@@ -1,43 +1,28 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { BrowseComponent } from './browse/browse.component';
-import { ManageComponent } from './manage/manage.component';
-import { DetailsComponent } from './browse/details/details.component';
-import { ModifyComponent } from './manage/modify/modify.component';
-import { AddNewComponent } from './manage/add-new/add-new.component';
+import { AuthGuard } from './auth.guard';
+import { LoginComponent } from './login/login.component';
+import { WelcomeComponent } from './home/components/welcome/welcome.component';
+import { MyIcecreamshopsComponent } from './home/components/my-icecreamshops/my-icecreamshops.component';
+import { AddIcecreamshopComponent } from './home/components/add-icecreamshop/add-icecreamshop.component';
 
 const routes: Routes = [
   {
-    path: '',
-    component: HomeComponent,
-    children: [
+    path: '', component: HomeComponent, canActivate: [AuthGuard], children: [
       {
-        path: '',
-        redirectTo: 'browse',
-        pathMatch: 'full'
+        path: '', component: WelcomeComponent
       },
       {
-        path: 'browse',
-        component: BrowseComponent
+        path: 'moje', component: MyIcecreamshopsComponent
       },
       {
-        path: 'manage',
-        component: ManageComponent
+        path: 'dodaj', component: AddIcecreamshopComponent
       }
-    ]
+    ],
   },
   {
-    path: 'details/:id',
-    component: DetailsComponent
-  },
-  {
-    path: 'modify/:id',
-    component: ModifyComponent
-  },
-  {
-    path: 'new',
-    component: AddNewComponent
+    path: 'login', component: LoginComponent
   }
 ];
 
@@ -45,4 +30,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

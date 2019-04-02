@@ -1,0 +1,9 @@
+<form class="register-form" [formGroup]="registerForm" (ngSubmit)="register()">
+    <mat-form-field>
+      <input matInput placeholder="Nazwa użytkownika" formControlName="username">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Hasło" type="password" formControlName="password">
+    </mat-form-field>
+    <button mat-raised-button color="primary" [disabled]="!registerForm.valid">Zarejestruj</button>
+</form>

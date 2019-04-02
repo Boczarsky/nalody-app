@@ -1,0 +1,16 @@
+.icecreamshop-form {
+    display: flex;
+    flex-direction: column;
+    margin: 5vw;
+    textarea {
+        resize: none;
+        height: 200px;
+    }
+}
+.add-button {
+    margin-left: 1rem;
+}
+
+.apply-button {
+    margin-top: 3rem;
+}

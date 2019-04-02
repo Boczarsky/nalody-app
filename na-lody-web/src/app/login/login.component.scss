@@ -1,0 +1,18 @@
+.center {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #3f51b5;
+}
+.form-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.change-mode-button {
+    position: absolute;
+    bottom: 3rem;
+}

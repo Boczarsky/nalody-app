@@ -1,0 +1,16 @@
+.toolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.mini {
+    display: none;
+}
+@media (max-width: 900px) {
+    .full {
+        display: none;
+    }
+    .mini {
+        display: inline;
+    }
+}

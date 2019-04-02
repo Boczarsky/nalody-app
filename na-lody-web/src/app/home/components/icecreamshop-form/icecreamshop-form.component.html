@@ -1,0 +1,33 @@
+<form #form="ngForm" [formGroup]="icecreamshopForm" class='icecreamshop-form' (ngSubmit)="apply()">
+  <mat-form-field>
+    <input matInput formControlName="name" [placeholder]="namePlaceholder" required>
+  </mat-form-field>
+  <mat-form-field>
+    <textarea matInput formControlName="description" [placeholder]="descriptionPlaceholder"></textarea>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput formControlName="imageUrl" [placeholder]="imageUrlPlaceholder">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput formControlName="city" [placeholder]="cityPlaceholder" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput formControlName="street" [placeholder]="streetPlaceholder" required>
+  </mat-form-field>
+  <div class="add-flavour">
+    <mat-form-field>
+      <input matInput [formControl]="flavourControl" [placeholder]="flavourPlaceholder" (keyup.enter)="addFlavour()">
+    </mat-form-field>
+    <button mat-raised-button [disabled]="flavourControl.invalid" type="button" (click)="addFlavour()" class="add-button">{{addFlavourPlaceholder}}</button>
+  </div>
+  <mat-list class="flavours-list">
+    <mat-list-item *ngFor="let item of flavours" class="flavour-list-item">
+      <mat-icon matListIcon color="accent">bookmark_border</mat-icon>
+      <p matLine>{{item}}</p>
+      <button mat-icon-button type="button" (click)="deleteFlavour(item)" [matTooltip]="deleteFlavourTooltip">
+        <mat-icon>delete_outline</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
+  <button mat-raised-button color="accent" [disabled]="!icecreamshopForm.valid" class="apply-button">{{applyPlaceholder}}</button>
+</form>

@@ -1,8 +1,33 @@
 <mat-toolbar color="primary">
-  <span>Na lody</span>
-  <nav>
-    <button mat-button routerLink="/browse" [disabled]="!isActive(path.browse)">Przeglądaj</button>
-    <button mat-button routerLink="/manage" [disabled]="!isActive(path.manage)">Zarządzaj</button>
-  </nav>
+  <mat-toolbar-row class="toolbar">
+    <span class="title">Menadżer lodzarni</span>
+    <span class="actions">
+      <span class="mini">
+          <button #miniMyRef mat-icon-button matTooltip="Moje lodziarnie" routerLink="/moje" routerLinkActive="button-disabled" [disabled]="checkDisabled(miniMyRef)">
+            <mat-icon >list_alt</mat-icon>
+          </button>
+          <button #miniAddRef mat-icon-button matTooltip="Dodaj lodziarnie" routerLink="/dodaj" routerLinkActive="button-disabled" [disabled]="checkDisabled(miniAddRef)">
+            <mat-icon >library_add</mat-icon>
+            </button>
+          <button mat-icon-button>
+            <mat-icon matTooltip="Wyloguj">exit_to_app</mat-icon>
+          </button>
+      </span>
+      <span class="full">
+          <button #fullMyRef mat-button routerLink="/moje" routerLinkActive="button-disabled" [disabled]="checkDisabled(fullMyRef)">
+            Moje lodziarnie
+            <mat-icon>list_alt</mat-icon>
+          </button>
+          <button #fullAddRef mat-button routerLink="/dodaj" routerLinkActive="button-disabled" [disabled]="checkDisabled(fullAddRef)">
+            Dodaj lodziarnie
+            <mat-icon>library_add</mat-icon>
+            </button>
+          <button mat-button>
+            Wyloguj
+            <mat-icon>exit_to_app</mat-icon>
+          </button>
+      </span>
+    </span>
+  </mat-toolbar-row>
 </mat-toolbar>
 <router-outlet></router-outlet>

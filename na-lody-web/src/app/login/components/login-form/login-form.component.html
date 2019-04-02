@@ -1,0 +1,9 @@
+<form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()">
+    <mat-form-field>
+      <input matInput placeholder="Nazwa użytkownika" formControlName="username">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Hasło" type="password" formControlName="password">
+    </mat-form-field>
+    <button mat-raised-button color="primary" [disabled]="!loginForm.valid">Zaloguj</button>
+</form>
