@@ -1,5 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { IcecreamshopsService } from 'src/app/services/icecreamshops.service';
+import { NotificationService } from 'src/app/services/notification.service';
+
+export enum FormModes {
+  'CREATE',
+  'UPDATE'
+}
 
 @Component({
   selector: 'app-icecreamshop-form',
@@ -7,6 +14,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./icecreamshop-form.component.scss']
 })
 export class IcecreamshopFormComponent implements OnInit {
+
+  @Input() mode = FormModes.CREATE;
+  @Input() data = null;
 
   @ViewChild('form') form;
 
@@ -31,9 +41,29 @@ export class IcecreamshopFormComponent implements OnInit {
 
   flavours = [];
 
-  constructor() { }
+  constructor(
+    private icecreamshopsService: IcecreamshopsService,
+    private notificationService: NotificationService
+    ) { }
 
   ngOnInit() {
+    if (this.data) {
+      this.setFieldsValues();
+    }
+  }
+
+  setFieldsValues() {
+    const {address, description, flavours, imageUrl, name} = this.data;
+    const {city, street, longitude, latitude} = address;
+    const fieldsValues = {name, description, imageUrl, city, street};
+    const fieldsNames = ['name', 'description', 'imageUrl', 'city', 'street'];
+    fieldsNames
+      .forEach(
+        (fieldName) => {
+          this.icecreamshopForm.get(fieldName).setValue(fieldsValues[fieldName]);
+        }
+      );
+    this.flavours = flavours;
   }
 
   addFlavour() {
@@ -60,7 +90,27 @@ export class IcecreamshopFormComponent implements OnInit {
       },
       flavours: this.flavours
     };
-    this.reset();
+    if (this.mode === FormModes.CREATE) {
+      this.icecreamshopsService.addIcecreamShop(data).subscribe(
+        (response) => {
+          this.notificationService.show('Dodano pomyślnie');
+          this.reset();
+        },
+        (error) => {
+          this.notificationService.show(error);
+        }
+      );
+    } else if (this.mode === FormModes.UPDATE) {
+      this.icecreamshopsService.updateIcecreamShop(this.data._id, data).subscribe(
+        (response) => {
+          this.notificationService.show('Zaktualizowano pomyślnie');
+        },
+        (error) => {
+          this.notificationService.show(error);
+        }
+      );
+    }
+
   }
 
   checkIfExist(flavour) {

@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +15,9 @@ import { WelcomeComponent } from './home/components/welcome/welcome.component';
 import { MyIcecreamshopsComponent } from './home/components/my-icecreamshops/my-icecreamshops.component';
 import { AddIcecreamshopComponent } from './home/components/add-icecreamshop/add-icecreamshop.component';
 import { IcecreamshopFormComponent } from './home/components/icecreamshop-form/icecreamshop-form.component';
+import { TokenInterceptor } from './services/token.interceptor';
+import { PreviewComponent } from './home/components/my-icecreamshops/components/preview/preview.component';
+import { UpdateComponent } from './home/components/my-icecreamshops/components/update/update.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,8 @@ import { IcecreamshopFormComponent } from './home/components/icecreamshop-form/i
     MyIcecreamshopsComponent,
     AddIcecreamshopComponent,
     IcecreamshopFormComponent,
+    PreviewComponent,
+    UpdateComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,7 +41,14 @@ import { IcecreamshopFormComponent } from './home/components/icecreamshop-form/i
     MaterialModule,
     ReactiveFormsModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ],
+  bootstrap: [AppComponent],
+  entryComponents: [PreviewComponent, UpdateComponent]
 })
 export class AppModule { }

@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row class="toolbar">
-    <span class="title">Menadżer lodzarni</span>
+    <a routerLink="/" class="title">Menadżer lodzarni</a>
     <span class="actions">
       <span class="mini">
           <button #miniMyRef mat-icon-button matTooltip="Moje lodziarnie" routerLink="/moje" routerLinkActive="button-disabled" [disabled]="checkDisabled(miniMyRef)">
@@ -9,7 +9,7 @@
           <button #miniAddRef mat-icon-button matTooltip="Dodaj lodziarnie" routerLink="/dodaj" routerLinkActive="button-disabled" [disabled]="checkDisabled(miniAddRef)">
             <mat-icon >library_add</mat-icon>
             </button>
-          <button mat-icon-button>
+          <button mat-icon-button (click)="logout()">
             <mat-icon matTooltip="Wyloguj">exit_to_app</mat-icon>
           </button>
       </span>
@@ -22,7 +22,7 @@
             Dodaj lodziarnie
             <mat-icon>library_add</mat-icon>
             </button>
-          <button mat-button>
+          <button mat-button (click)="logout()">
             Wyloguj
             <mat-icon>exit_to_app</mat-icon>
           </button>

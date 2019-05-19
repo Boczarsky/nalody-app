@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-home',
@@ -7,13 +8,17 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private loginService: LoginService) { }
 
   ngOnInit() {
   }
 
   checkDisabled(elementRef) {
     return elementRef._elementRef.nativeElement.classList.contains('button-disabled');
+  }
+
+  logout() {
+    this.loginService.logout();
   }
 
 }

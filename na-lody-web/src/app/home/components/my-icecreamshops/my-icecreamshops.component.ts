@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { IcecreamshopsService } from 'src/app/services/icecreamshops.service';
+import { NotificationService } from 'src/app/services/notification.service';
+import { MatDialog } from '@angular/material';
+import { PreviewComponent } from './components/preview/preview.component';
+import { UpdateComponent } from './components/update/update.component';
 
 @Component({
   selector: 'app-my-icecreamshops',
@@ -9,18 +14,72 @@ export class MyIcecreamshopsComponent implements OnInit {
 
   editTooltip = 'Edytuj';
   previewTooltip  = 'Podgląd';
+  deleteTooltip  = 'Usuń';
 
-  data = [
-    {_id: 1, name: 'Lodziarnia 1', address: {city: 'Miasto', street: 'Ulica 1'}},
-    {_id: 2, name: 'Lodziarnia 2', address: {city: 'Miasto', street: 'Ulica 2'}},
-    {_id: 3, name: 'Lodziarnia 3', address: {city: 'Miasto', street: 'Ulica 3'}},
-    {_id: 4, name: 'Lodziarnia 4', address: {city: 'Miasto', street: 'Ulica 4'}},
-    {_id: 5, name: 'Lodziarnia 5', address: {city: 'Miasto', street: 'Gen. Kociarbińskiego Bohatera Narodowego 110/5a'}},
-  ];
+  data;
 
-  constructor() { }
+  constructor(
+    private icecreamshopsService: IcecreamshopsService,
+    private notificationService: NotificationService,
+    private matDialog: MatDialog,
+    ) { }
 
   ngOnInit() {
+    this.inicializeList();
+  }
+
+  inicializeList() {
+    this.icecreamshopsService.getOwnedIcecreamShops()
+    .subscribe(
+      (response) => {
+        this.data = response;
+      },
+      (error) => {
+        this.notificationService.show('Wystąpił błąd');
+        this.data = [];
+      }
+    );
+  }
+
+  preview(id) {
+    this.icecreamshopsService.getIcecreamShop(id).subscribe(
+      (response) => {
+        this.matDialog.open(PreviewComponent, {data: response});
+      },
+      (error) => {
+        this.notificationService.show('Wystąpił błąd');
+      }
+    );
+  }
+
+  edit(id) {
+    this.icecreamshopsService.getIcecreamShop(id).subscribe(
+      (response) => {
+        this.matDialog.open(UpdateComponent, {data: response});
+      },
+      (error) => {
+        this.notificationService.show('Wystąpił błąd');
+      }
+    );
+  }
+
+  delete(id) {
+    this.icecreamshopsService.deleteIcecreamShop(id).subscribe(
+      (response) => {
+        this.inicializeList();
+      },
+      (error) => {
+        this.notificationService.show('Wystąpił błąd');
+      }
+    );
+  }
+
+  printReport() {
+    this.icecreamshopsService.getReport().subscribe( (response) => {
+      const blob = new Blob([response], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+      window.open(url);
+    });
   }
 
 }

@@ -4,14 +4,23 @@
         <h4 matLine>{{item.name}}</h4>
         <p matLine>{{item.address.city}}, {{item.address.street}}</p>
         <div class="actions">
-          <button mat-mini-fab class='action-button' [matTooltip]="previewTooltip">
+          <button mat-mini-fab class='action-button' [matTooltip]="previewTooltip" (click)="preview(item._id)">
             <mat-icon>pageview</mat-icon>
           </button>
-          <button mat-mini-fab class='action-button' [matTooltip]="editTooltip">
+          <button mat-mini-fab class='action-button' [matTooltip]="editTooltip" (click)="edit(item._id)">
             <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-mini-fab class='action-button' [matTooltip]="deleteTooltip" (click)="delete(item._id)">
+            <mat-icon>delete_forever</mat-icon>
           </button>
         </div>
         <mat-divider></mat-divider>
       </mat-list-item>
     </mat-list>
+</div>
+<ng-container *ngIf="data && data.length === 0">
+  <p class='search-info'>Nie znaleziono żadnych lodziarni należących do Ciebie</p>
+</ng-container>
+<div class="print-report" *ngIf="data && data.length > 0">
+  <button mat-raised-button (click)="printReport()">Drukuj raport</button>
 </div>

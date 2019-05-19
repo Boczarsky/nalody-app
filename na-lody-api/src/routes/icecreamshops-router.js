@@ -13,6 +13,8 @@ class IcecreamShopsRouter {
             .post(guard, this.controller.add);
         this.router.route('/owned')
             .get(guard, this.controller.getOwned);
+        this.router.route('/report')
+            .get(guard, this.controller.getReport);
         this.router.route('/favorite')
             .post(this.controller.getFavorite);
         this.router.route('/:id')

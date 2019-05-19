@@ -1,4 +1,5 @@
 <div class="center">
+  <h1 class="title">{{currentTitle}}</h1>
   <mat-card class="form-wrapper">
     <app-login-form *ngIf="currentMode === MODE.login"></app-login-form>
     <app-register-form *ngIf="currentMode === MODE.register"></app-register-form>

@@ -1,0 +1,22 @@
+<div class="preview-wrapper">
+  <div class="name">
+    {{data.name}}
+  </div>
+  <figure *ngIf="data.imageUrl">
+    <img src="{{data.imageUrl}}"/>
+  </figure>
+  <div class="description">
+    {{data.description}}
+  </div>
+  <div class="flavours-list">
+    <div class="list-header">Dostępne smaki:</div>
+    <mat-list>
+      <ng-container *ngFor="let item of data.flavours">
+        <mat-list-item>{{item}}</mat-list-item>
+      </ng-container>
+    </mat-list>
+  </div>
+  <div class="address">
+    Adres: {{data.address.city}}, {{data.address.street}}
+  </div>
+</div>

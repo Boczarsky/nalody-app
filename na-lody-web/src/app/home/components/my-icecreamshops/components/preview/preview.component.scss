@@ -1,5 +1,6 @@
 .preview-wrapper {
-    margin-top: 3rem;
+    overflow-y: auto;
+    max-height: 90vh;
 }
 
 figure {

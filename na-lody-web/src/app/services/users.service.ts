@@ -7,25 +7,26 @@ import { HttpClient } from '@angular/common/http';
 })
 export class UsersService {
 
-  protected URL = environment.apiURL + 'users/';
+  protected URL = environment.apiURL + '/users/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   login(username: string, password: string) {
-    const requestUrl = URL + 'login';
+    const requestUrl = this.URL + 'login';
     const body = {
       username,
       password
     };
-    this.http.post(requestUrl, body).subscribe((response) => console.log(response));
+    return this.http.post(requestUrl, body);
   }
 
   register(username: string, password: string) {
-    const requestUrl = URL + 'register';
+    const requestUrl = this.URL + 'register';
     const body = {
       username,
       password
     };
-    this.http.post(requestUrl, body).subscribe((response) => console.log(response));
+    return this.http.post(requestUrl, body);
   }
 }

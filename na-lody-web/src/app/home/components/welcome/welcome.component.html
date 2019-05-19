@@ -1,3 +1,22 @@
-<p>
-  welcome works!
-</p>
+<div class="preview-wrapper" *ngIf="currentIcecreamShop">
+  <div class="name">
+    {{currentIcecreamShop.name}}
+  </div>
+  <figure *ngIf="currentIcecreamShop.imageUrl">
+    <img src="{{currentIcecreamShop.imageUrl}}"/>
+  </figure>
+  <div class="description">
+    {{currentIcecreamShop.description}}
+  </div>
+  <div class="flavours-list">
+    <div class="list-header">Dostępne smaki:</div>
+    <mat-list>
+      <ng-container *ngFor="let item of currentIcecreamShop.flavours">
+        <mat-list-item>{{item}}</mat-list-item>
+      </ng-container>
+    </mat-list>
+  </div>
+  <div class="address">
+    Adres: {{currentIcecreamShop.address.city}}, {{currentIcecreamShop.address.street}}
+  </div>
+</div>

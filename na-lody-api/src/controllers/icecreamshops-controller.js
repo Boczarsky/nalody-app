@@ -1,5 +1,6 @@
 const icecreamshop = require('../models/icecreamshop');
 const mongoose = require('mongoose');
+const PDFDocument = require('pdfkit');
 
 class IcecreamShopsController {
 
@@ -43,6 +44,34 @@ class IcecreamShopsController {
         })
     }
 
+    getReport(request, response) {
+        icecreamshop.find({ owner: request.userData.username }, 'name description imageUrl address.city address.street flavours', (err, docs) => {
+            if(err) {
+                response.status(500).send(err);
+            } else {
+                if (docs.length === 0) {
+                    response.sendStatus(204)
+                } else {
+                    const pdf = new PDFDocument;
+                    pdf.pipe(response);
+                    pdf.font('fonts/Roboto-Medium.ttf');
+                    docs.forEach( (icecreamshop) => {
+                        pdf.text('Nazwa: ' + icecreamshop.name);
+                        pdf.moveDown();
+                        pdf.text('Opis: ' + icecreamshop.description);
+                        pdf.moveDown();
+                        pdf.text('Address: ' + icecreamshop.address.city + ', ' + icecreamshop.address.street);
+                        pdf.moveDown();
+                        const reducedFlavours = icecreamshop.flavours.reduce( (prev, curr) => prev + ', ' + curr );
+                        pdf.text('Dostępne smaki: ' + reducedFlavours);
+                        pdf.moveDown();
+                    })
+                    pdf.end();
+                }
+            }
+        })
+    }
+
     getFavorite(request, response) {
         const favorites = request.body;
         icecreamshop.find({ "_id": {$in: favorites} }, '_id name', (err, docs) => {
@@ -59,7 +88,7 @@ class IcecreamShopsController {
         const { name, description, imageUrl, address, flavours } = request.body;
         icecreamshop.create({
             _id: new mongoose.Types.ObjectId(),
-            ownerId: new mongoose.Types.ObjectId(request.userData.username),
+            owner: request.userData.username,
             name: name,
             description: description,
             imageUrl: imageUrl,
@@ -93,7 +122,7 @@ class IcecreamShopsController {
                         if(err) {
                             response.status(500).send(err);
                         } else {
-                            response.sendStatus(201);
+                            response.sendStatus(204);
                         }
                     })
                 } else {
@@ -157,7 +186,7 @@ async function checkIfOwner( request ) {
         icecreamshop.findById(request.params.id, (err, res) => {
             if(err) {
                 reject(err);
-            } else if (res && res.ownerId == request.userData.id) {
+            } else if (res && res.owner == request.userData.username) {
                 resolve(true);
             } else {
                 resolve(false)

@@ -13,6 +13,9 @@
     align-items: center;
 }
 .change-mode-button {
-    position: absolute;
-    bottom: 3rem;
+    position: relative;
+    top: 1rem;
+}
+.title {
+    color: white;
 }
